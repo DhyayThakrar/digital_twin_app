@@ -78,18 +78,75 @@ The app requests access to the following health data:
 
 ```
 DigitalTwin/
-├── DigitalTwinApp.swift      # App entry point
-├── ContentView.swift          # Main UI with dashboard components
-├── HealthKitManager.swift     # HealthKit data fetching & management
-├── Assets.xcassets/           # App icons and colors
-├── Info.plist                 # App configuration with HealthKit permissions
-└── DigitalTwin.entitlements   # HealthKit entitlements
+├── DigitalTwinApp.swift        # App entry point
+├── ContentView.swift           # Main UI with dashboard components
+├── HealthKitManager.swift      # HealthKit data fetching & management
+├── StressFeatureBuilder.swift  # Weekly feature aggregation for ML
+├── StressPredictor.swift       # CoreML inference for stress prediction
+├── StressService.swift         # Orchestrates stress risk analysis
+├── Assets.xcassets/            # App icons and colors
+├── Info.plist                  # App configuration with HealthKit permissions
+└── DigitalTwin.entitlements    # HealthKit entitlements
+
+StressModelTraining/            # Python ML training code
+├── train_stress_model.py       # RandomForest training + CoreML export
+└── requirements.txt            # Python dependencies
 ```
+
+## ML Stress Prediction Model
+
+The app includes an ML-based stress prediction system inspired by the WISE stress detection research. It analyzes the last 7-14 days of health data to predict stress risk.
+
+### Features Used for Prediction
+
+| Feature | Description |
+|---------|-------------|
+| `meanHRV`, `stdHRV`, `trendHRV` | Heart Rate Variability statistics and trend |
+| `meanHR`, `stdHR`, `trendHR` | Heart Rate statistics and trend |
+| `meanRestingHR` | Average resting heart rate |
+| `meanSteps`, `stdSteps` | Daily step count statistics |
+| `meanActiveEnergy` | Average active calories burned |
+| `meanExerciseMinutes` | Average exercise time |
+| `meanSleepMinutes`, `stdSleepMinutes`, `trendSleepMinutes` | Sleep duration statistics |
+
+### Training Your Own Model
+
+1. Install Python dependencies:
+   ```bash
+   cd StressModelTraining
+   pip install -r requirements.txt
+   ```
+
+2. Run the training script:
+   ```bash
+   python train_stress_model.py
+   ```
+
+3. Add the generated `StressWeekModel.mlmodel` to Xcode:
+   - Drag the file into your Xcode project
+   - Xcode will auto-generate the Swift interface
+   - The app will automatically use it for predictions
+
+### Collecting Real Training Data
+
+For better accuracy, collect user self-reported stress labels:
+- Daily stress rating (1-10 scale)
+- Threshold ≥7 as "high stress" label
+- Aim for 2-4 weeks of data per user
+
+### Fallback Heuristic
+
+When no CoreML model is available, the app uses a research-backed heuristic:
+- Lower HRV → Higher stress risk
+- Higher HR → Higher stress risk
+- Less sleep → Higher stress risk
+- Lower activity → Higher stress risk
 
 ## Dashboard Components
 
 | Component | Description |
 |-----------|-------------|
+| **Stress Risk Card** | ML-powered 7-day stress prediction with gauge and contributing factors |
 | **Heart Rate Card** | Animated heart synced to BPM with status indicator |
 | **Quick Stats** | Steps and calories burned today |
 | **Stress Level** | HRV-based stress indicator with visual bar |
@@ -113,23 +170,31 @@ The app reads the following from Apple Health:
 
 ## Roadmap
 
-### Phase 1 (Current) ✅
+### Phase 1 ✅
 - Basic health data visualization
 - Real-time data from Apple Health
 - Stress level based on HRV thresholds
 - Weekly activity trends
 
-### Phase 2 (Planned)
-- [ ] Stress score predictions using ML
+### Phase 2 (Current) ✅
+- [x] Stress score predictions using ML
+- [x] 7-day feature aggregation
+- [x] CoreML model integration
+- [x] Heuristic fallback when no model
+- [x] Contributing factors visualization
+
+### Phase 3 (Planned)
 - [ ] Trend forecasting (next 7 days)
 - [ ] Time-of-day stress patterns
 - [ ] Personalized lifestyle recommendations
+- [ ] User stress self-reporting for model training
 
-### Phase 3 (Future)
+### Phase 4 (Future)
 - [ ] Historical trend analysis
 - [ ] Anomaly detection
 - [ ] Integration with calendar for stress correlation
 - [ ] Export reports
+- [ ] Per-user model personalization
 
 ## Deployment Checklist
 
