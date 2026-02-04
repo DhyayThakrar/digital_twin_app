@@ -112,69 +112,101 @@ struct OnboardingView: View {
 struct DashboardView: View {
     @EnvironmentObject var healthKitManager: HealthKitManager
     @State private var heartScale: CGFloat = 1.0
+    @State private var showingAddActivity = false
+    @State private var showingBodyBattery = false
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Insights & Forecast Section at the top
-                    InsightsAndForecastCard(
-                        hrv: healthKitManager.latestHRV,
-                        sleepHours: healthKitManager.lastNightSleep,
-                        todaySteps: healthKitManager.todaySteps,
-                        weeklySteps: healthKitManager.weeklySteps,
-                        restingHR: healthKitManager.restingHeartRate
-                    )
-                    .padding(.horizontal)
-                    
-                    HeartRateCard(
-                        heartRate: healthKitManager.latestHeartRate,
-                        heartScale: $heartScale
-                    )
-                    .onAppear { startHeartAnimation() }
-                    
-                    HStack(spacing: 12) {
-                        QuickStatCard(
-                            icon: "figure.walk",
-                            title: "Steps",
-                            value: formatNumber(healthKitManager.todaySteps),
-                            color: .green
-                        )
+            ZStack {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // Body Battery Card - Prominent at the top
+                        BodyBatteryPreviewCard(showingBodyBattery: $showingBodyBattery)
+                            .padding(.horizontal)
                         
-                        QuickStatCard(
-                            icon: "flame.fill",
-                            title: "Calories",
-                            value: formatNumber(healthKitManager.activeCalories),
-                            unit: "kcal",
-                            color: .orange
+                        // Insights & Forecast Section at the top
+                        InsightsAndForecastCard(
+                            hrv: healthKitManager.latestHRV,
+                            sleepHours: healthKitManager.lastNightSleep,
+                            todaySteps: healthKitManager.todaySteps,
+                            weeklySteps: healthKitManager.weeklySteps,
+                            restingHR: healthKitManager.restingHeartRate
                         )
+                        .padding(.horizontal)
+                        
+                        HeartRateCard(
+                            heartRate: healthKitManager.latestHeartRate,
+                            heartScale: $heartScale
+                        )
+                        .onAppear { startHeartAnimation() }
+                        
+                        HStack(spacing: 12) {
+                            QuickStatCard(
+                                icon: "figure.walk",
+                                title: "Steps",
+                                value: formatNumber(healthKitManager.todaySteps),
+                                color: .green
+                            )
+                            
+                            QuickStatCard(
+                                icon: "flame.fill",
+                                title: "Calories",
+                                value: formatNumber(healthKitManager.activeCalories),
+                                unit: "kcal",
+                                color: .orange
+                            )
+                        }
+                        .padding(.horizontal)
+                        
+                        HRVCard(hrv: healthKitManager.latestHRV)
+                            .padding(.horizontal)
+                        
+                        // Self-Reported Activities Card
+                        ActivityHistoryCard()
+                            .padding(.horizontal)
+                        
+                        SleepCard(sleepHours: healthKitManager.lastNightSleep)
+                            .padding(.horizontal)
+                        
+                        ActivitySummaryCard(
+                            distance: healthKitManager.todayDistance,
+                            restingHR: healthKitManager.restingHeartRate
+                        )
+                        .padding(.horizontal)
+                        
+                        WeeklyInsightsCard(weeklyData: healthKitManager.weeklySteps)
+                            .padding(.horizontal)
+                        
+                        Spacer(minLength: 100) // Extra space for floating button
                     }
-                    .padding(.horizontal)
-                    
-                    HRVCard(hrv: healthKitManager.latestHRV)
-                        .padding(.horizontal)
-                    
-                    SleepCard(sleepHours: healthKitManager.lastNightSleep)
-                        .padding(.horizontal)
-                    
-                    ActivitySummaryCard(
-                        distance: healthKitManager.todayDistance,
-                        restingHR: healthKitManager.restingHeartRate
-                    )
-                    .padding(.horizontal)
-                    
-                    WeeklyInsightsCard(weeklyData: healthKitManager.weeklySteps)
-                        .padding(.horizontal)
-                    
-                    Spacer(minLength: 20)
+                    .padding(.top)
                 }
-                .padding(.top)
+                .background(Color(.systemGroupedBackground))
+                .navigationTitle("Today")
+                .navigationBarTitleDisplayMode(.large)
+                .refreshable {
+                    await healthKitManager.refreshAllData()
+                }
+                
+                // Floating Add Activity Button
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        FloatingAddButton {
+                            showingAddActivity = true
+                        }
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 30)
+                    }
+                }
             }
-            .background(Color(.systemGroupedBackground))
-            .navigationTitle("Today")
-            .navigationBarTitleDisplayMode(.large)
-            .refreshable {
-                await healthKitManager.refreshAllData()
+            .sheet(isPresented: $showingAddActivity) {
+                AddActivityView()
+            }
+            .fullScreenCover(isPresented: $showingBodyBattery) {
+                BodyBatteryView()
+                    .environmentObject(healthKitManager)
             }
         }
         .onAppear {
@@ -196,6 +228,89 @@ struct DashboardView: View {
             return String(format: "%.1fk", value / 1000)
         }
         return String(format: "%.0f", value)
+    }
+}
+
+// MARK: - Body Battery Preview Card
+
+struct BodyBatteryPreviewCard: View {
+    @StateObject private var batteryManager = BodyBatteryManager.shared
+    @Binding var showingBodyBattery: Bool
+    
+    var batteryColor: Color {
+        switch batteryManager.currentBattery {
+        case 70...100: return .green
+        case 40..<70: return .yellow
+        case 20..<40: return .orange
+        default: return .red
+        }
+    }
+    
+    var body: some View {
+        Button(action: { showingBodyBattery = true }) {
+            HStack(spacing: 16) {
+                // Battery visual
+                ZStack {
+                    Circle()
+                        .stroke(Color(.systemGray5), lineWidth: 8)
+                        .frame(width: 70, height: 70)
+                    
+                    Circle()
+                        .trim(from: 0, to: CGFloat(batteryManager.currentBattery) / 100.0)
+                        .stroke(
+                            batteryColor,
+                            style: StrokeStyle(lineWidth: 8, lineCap: .round)
+                        )
+                        .frame(width: 70, height: 70)
+                        .rotationEffect(.degrees(-90))
+                    
+                    VStack(spacing: 0) {
+                        Text("\(batteryManager.currentBattery)")
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .foregroundColor(batteryColor)
+                        Text("%")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Body Battery")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    Text(batteryManager.batteryInsight)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .lineLimit(2)
+                    
+                    HStack(spacing: 4) {
+                        Image(systemName: "arrow.right.circle.fill")
+                            .font(.caption)
+                        Text("Tap to manage energy")
+                            .font(.caption)
+                    }
+                    .foregroundColor(.blue)
+                }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.secondary)
+                    .font(.caption)
+            }
+            .padding(20)
+            .background(
+                LinearGradient(
+                    colors: [batteryColor.opacity(0.1), Color(.systemBackground)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .cornerRadius(20)
+            .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 

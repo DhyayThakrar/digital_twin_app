@@ -7,14 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		027F471D2F244B67003E6708 /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F471C2F244B67003E6708 /* ActivityManager.swift */; };
+		027F471F2F244B68003E6708 /* BodyBatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F471E2F244B68003E6708 /* BodyBatteryView.swift */; };
 		A1000001226B8D7A00F12345 /* DigitalTwinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000226B8D7A00F12345 /* DigitalTwinApp.swift */; };
 		A1000003226B8D7A00F12345 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002226B8D7A00F12345 /* ContentView.swift */; };
 		A1000005226B8D7B00F12345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000004226B8D7B00F12345 /* Assets.xcassets */; };
 		A1000007226B8D7B00F12345 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006226B8D7B00F12345 /* HealthKitManager.swift */; };
 		A1000009226B8D7B00F12345 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1000008226B8D7B00F12345 /* HealthKit.framework */; };
+		A1000011226B8D7B00F12345 /* Frameworks in Sources */ = {isa = PBXBuildFile; fileRef = A1000010226B8D7B00F12345 /* Frameworks */; };
+		A1000013226B8D7B00F12345 /* AddActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000012226B8D7B00F12345 /* AddActivityView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		027F471C2F244B67003E6708 /* ActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
+		027F471E2F244B68003E6708 /* BodyBatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyBatteryView.swift; sourceTree = "<group>"; };
 		A0FFFFF0226B8D7A00F12345 /* DigitalTwin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigitalTwin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000000226B8D7A00F12345 /* DigitalTwinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalTwinApp.swift; sourceTree = "<group>"; };
 		A1000002226B8D7A00F12345 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -23,6 +29,7 @@
 		A1000008226B8D7B00F12345 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		A100000A226B8D7B00F12345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A100000B226B8D7B00F12345 /* DigitalTwin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalTwin.entitlements; sourceTree = "<group>"; };
+		A1000012226B8D7B00F12345 /* AddActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +66,10 @@
 			children = (
 				A1000000226B8D7A00F12345 /* DigitalTwinApp.swift */,
 				A1000002226B8D7A00F12345 /* ContentView.swift */,
+				027F471C2F244B67003E6708 /* ActivityManager.swift */,
+				027F471E2F244B68003E6708 /* BodyBatteryView.swift */,
 				A1000006226B8D7B00F12345 /* HealthKitManager.swift */,
+				A1000012226B8D7B00F12345 /* AddActivityView.swift */,
 				A1000004226B8D7B00F12345 /* Assets.xcassets */,
 				A100000A226B8D7B00F12345 /* Info.plist */,
 				A100000B226B8D7B00F12345 /* DigitalTwin.entitlements */,
@@ -146,7 +156,11 @@
 			files = (
 				A1000003226B8D7A00F12345 /* ContentView.swift in Sources */,
 				A1000001226B8D7A00F12345 /* DigitalTwinApp.swift in Sources */,
+				027F471D2F244B67003E6708 /* ActivityManager.swift in Sources */,
+				027F471F2F244B68003E6708 /* BodyBatteryView.swift in Sources */,
 				A1000007226B8D7B00F12345 /* HealthKitManager.swift in Sources */,
+				A1000011226B8D7B00F12345 /* Frameworks in Sources */,
+				A1000013226B8D7B00F12345 /* AddActivityView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

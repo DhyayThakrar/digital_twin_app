@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>This app reads your heart rate, heart rate variability, and other health data to track your physiological response during recharge activities like breathing exercises, meditation, and walking.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>This app records mindfulness workout sessions to enable high-frequency heart rate monitoring from your Apple Watch during breathing exercises and meditation.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
