@@ -34,7 +34,7 @@ struct PipelineResult {
     let timestamp: Date
 
     // Stage 1: Activity
-    let activityType: ActivityType        // .physical or .cognitive
+    let activityType: ClassifiedActivityType        // .physical or .cognitive
     let activityConfidence: Double         // 0-1 confidence from model
 
     // Stage 2: Sleep adjustment
@@ -55,7 +55,7 @@ struct PipelineResult {
     let recoverySlope: Double?            // DC increase rate after activity
 }
 
-enum ActivityType: String {
+enum ClassifiedActivityType: String {
     case physical = "PHYSICAL"
     case cognitive = "COGNITIVE"
     case unknown = "UNKNOWN"
@@ -144,11 +144,11 @@ class ActivityClassifier_Stage1 {
     ///   - accMean: Mean accelerometer magnitude (or steps-per-minute proxy)
     ///   - accStd: Std deviation of accelerometer (or steps variability)
     ///
-    /// - Returns: (ActivityType, confidence 0-1)
+    /// - Returns: (ClassifiedActivityType, confidence 0-1)
     func classify(hrMean: Double?, hrStd: Double?,
-                  accMean: Double?, accStd: Double?) -> (ActivityType, Double) {
+                  accMean: Double?, accStd: Double?) -> (ClassifiedActivityType, Double) {
         guard let model = model else {
-            return (.unknown, 0.0)
+            return (ClassifiedActivityType.unknown, 0.0)
         }
 
         // Step 1: Impute NaN/nil with training means
@@ -185,12 +185,12 @@ class ActivityClassifier_Stage1 {
                 }
             }
 
-            let activityType = ActivityType(rawValue: predictedClass) ?? .unknown
+            let activityType = ClassifiedActivityType(rawValue: predictedClass) ?? .unknown
             return (activityType, confidence)
 
         } catch {
             print("Prediction failed: \(error)")
-            return (.unknown, 0.0)
+            return (ClassifiedActivityType.unknown, 0.0)
         }
     }
 }
