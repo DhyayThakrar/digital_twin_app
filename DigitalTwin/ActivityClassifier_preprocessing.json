@@ -1,0 +1,36 @@
+{
+  "features": [
+    "HR_mean",
+    "HR_std",
+    "ACC_mean",
+    "ACC_std"
+  ],
+  "imputer_fill_values": {
+    "HR_mean": 96.35275105485232,
+    "HR_std": 1.2718996835412197,
+    "ACC_mean": 3.4330424344532218,
+    "ACC_std": 1.2206614209623696
+  },
+  "scaler_means": {
+    "HR_mean": 96.35275105485232,
+    "HR_std": 1.2718996835412197,
+    "ACC_mean": 3.4330424344532218,
+    "ACC_std": 1.2206614209623696
+  },
+  "scaler_stds": {
+    "HR_mean": 26.6445724942398,
+    "HR_std": 1.4455985858811402,
+    "ACC_mean": 2.4550617526206238,
+    "ACC_std": 0.9666073785693061
+  },
+  "classes": [
+    "COGNITIVE",
+    "PHYSICAL"
+  ],
+  "class_mapping": {
+    "COGNITIVE": 0,
+    "PHYSICAL": 1
+  },
+  "loso_accuracy": 0.93624161311483,
+  "note": "Before calling the model, replace NaN with imputer_fill_values, then standardize: (value - mean) / std"
+}
