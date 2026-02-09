@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		027F471D2F244B67003E6708 /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F471C2F244B67003E6708 /* ActivityManager.swift */; };
 		027F471F2F244B68003E6708 /* BodyBatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F471E2F244B68003E6708 /* BodyBatteryView.swift */; };
+		2CC7FE612F39684F008AA794 /* ActivityClassifier_preprocessing.json in Resources */ = {isa = PBXBuildFile; fileRef = 2CC7FE602F39684F008AA794 /* ActivityClassifier_preprocessing.json */; };
+		2CC7FE632F39687B008AA794 /* ActivityClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2CC7FE622F39687B008AA794 /* ActivityClassifier.mlmodel */; };
 		A1000001226B8D7A00F12345 /* DigitalTwinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000226B8D7A00F12345 /* DigitalTwinApp.swift */; };
 		A1000003226B8D7A00F12345 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002226B8D7A00F12345 /* ContentView.swift */; };
 		A1000005226B8D7B00F12345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000004226B8D7B00F12345 /* Assets.xcassets */; };
@@ -21,6 +23,8 @@
 /* Begin PBXFileReference section */
 		027F471C2F244B67003E6708 /* ActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
 		027F471E2F244B68003E6708 /* BodyBatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyBatteryView.swift; sourceTree = "<group>"; };
+		2CC7FE602F39684F008AA794 /* ActivityClassifier_preprocessing.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ActivityClassifier_preprocessing.json; sourceTree = "<group>"; };
+		2CC7FE622F39687B008AA794 /* ActivityClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ActivityClassifier.mlmodel; sourceTree = "<group>"; };
 		A0FFFFF0226B8D7A00F12345 /* DigitalTwin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigitalTwin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000000226B8D7A00F12345 /* DigitalTwinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalTwinApp.swift; sourceTree = "<group>"; };
 		A1000002226B8D7A00F12345 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,6 +68,7 @@
 		A0FFFFF2226B8D7A00F12345 /* DigitalTwin */ = {
 			isa = PBXGroup;
 			children = (
+				2CC7FE622F39687B008AA794 /* ActivityClassifier.mlmodel */,
 				A1000000226B8D7A00F12345 /* DigitalTwinApp.swift */,
 				A1000002226B8D7A00F12345 /* ContentView.swift */,
 				027F471C2F244B67003E6708 /* ActivityManager.swift */,
@@ -73,6 +78,7 @@
 				A1000004226B8D7B00F12345 /* Assets.xcassets */,
 				A100000A226B8D7B00F12345 /* Info.plist */,
 				A100000B226B8D7B00F12345 /* DigitalTwin.entitlements */,
+				2CC7FE602F39684F008AA794 /* ActivityClassifier_preprocessing.json */,
 			);
 			path = DigitalTwin;
 			sourceTree = "<group>";
@@ -143,6 +149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CC7FE612F39684F008AA794 /* ActivityClassifier_preprocessing.json in Resources */,
 				A1000005226B8D7B00F12345 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +165,7 @@
 				A1000001226B8D7A00F12345 /* DigitalTwinApp.swift in Sources */,
 				027F471D2F244B67003E6708 /* ActivityManager.swift in Sources */,
 				027F471F2F244B68003E6708 /* BodyBatteryView.swift in Sources */,
+				2CC7FE632F39687B008AA794 /* ActivityClassifier.mlmodel in Sources */,
 				A1000007226B8D7B00F12345 /* HealthKitManager.swift in Sources */,
 				A1000011226B8D7B00F12345 /* Frameworks in Sources */,
 				A1000013226B8D7B00F12345 /* AddActivityView.swift in Sources */,
@@ -295,14 +303,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K4L6T6JMX9;
+				DEVELOPMENT_TEAM = 5CXN5G9Q6F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DigitalTwin/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Digital Twin";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your health data to create your digital twin and provide personalized insights.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to save health data to track your progress and goals.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app reads your heart rate, heart rate variability, and other health data to track your physiological response during recharge activities like breathing exercises, meditation, and walking.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app records mindfulness workout sessions to enable high-frequency heart rate monitoring from your Apple Watch during breathing exercises and meditation.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -315,7 +323,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dhyay.digitaltwin;
+				PRODUCT_BUNDLE_IDENTIFIER = com.camille.digitaltwin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -333,14 +341,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K4L6T6JMX9;
+				DEVELOPMENT_TEAM = 5CXN5G9Q6F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DigitalTwin/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Digital Twin";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your health data to create your digital twin and provide personalized insights.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to save health data to track your progress and goals.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app reads your heart rate, heart rate variability, and other health data to track your physiological response during recharge activities like breathing exercises, meditation, and walking.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app records mindfulness workout sessions to enable high-frequency heart rate monitoring from your Apple Watch during breathing exercises and meditation.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -353,7 +361,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dhyay.digitaltwin;
+				PRODUCT_BUNDLE_IDENTIFIER = com.camille.digitaltwin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
